@@ -20,7 +20,11 @@
  * Apply Test-Driven Development to solve this problem.
  *
 <!--//# BEGIN TODO: Name, student ID, and date-->
-<p><b>Replace this line</b></p>
+
+    Name: Paulo Vieira 
+    Student ID: 1798618
+    Date: 2025-05-05
+
 <!--//# END TODO-->
  */
 public class Candy {
@@ -41,10 +45,14 @@ public class Candy {
      *   0 <= \return < 10^18 && c == \return * k}
      */
     static long divide(long k, long c) {
-        long result; // value to be returned
-//# BEGIN TODO: Provide method implementation
-// Replace this line
-//# END TODO
+        long result; 
+
+        if (c % k == 0) {
+            result = c / k;
+        } else {
+            result = -1;
+        }
+
         return result;
     }
 

@@ -7,18 +7,19 @@ import org.junit.jupiter.api.Test;
  * the test with JUnit.
  *
 <!--//# BEGIN TODO: Name, student ID, and date-->
-<p><b>Replace this line</b></p>
+
+    Name: Paulo Vieira 
+    Student ID: 1798618
+    Date: 2025-05-05
+    
 <!--//# END TODO-->
  */
 public class CandyTest {
 
-    static final Candy SUT = null; // to simplify method calls
+    static final Candy SUT = null; 
 
     static final long MAX_VALUE = 999999999999999999L;
 
-    /**
-     * Checks the result of SUT.divide(k, c).
-     */
     private void check(long k, long c, boolean expected) {
         System.out.println("divide(" + k + ", " + c + ")");
         long result = SUT.divide(k, c);
@@ -32,7 +33,6 @@ public class CandyTest {
 
     // Test cases
 
-    /** The given example. */
     @Test
     public void testDivideGivenExample() {
         check(3, 15, true);
