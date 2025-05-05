@@ -11,12 +11,12 @@ import org.junit.jupiter.api.Test;
     Name: Paulo Vieira 
     Student ID: 1798618
     Date: 2025-05-05
-    
+
 <!--//# END TODO-->
  */
 public class CandyTest {
 
-    static final Candy SUT = null; 
+    static final Candy SUT = new Candy(); 
 
     static final long MAX_VALUE = 999999999999999999L;
 
@@ -39,7 +39,25 @@ public class CandyTest {
     }
 
 //# BEGIN TODO: Additional test cases
-// Replace this line
+    @Test
+    public void testDivideOneKid() {
+        check(1, MAX_VALUE, true);
+    }
+
+    @Test
+    public void testDivideOneCandy() {
+        check(MAX_VALUE, 1, false);
+    }
+
+    @Test
+    public void testDivideZeroKids() {
+        check(0, 1, false);
+    }
+
+    @Test
+    public void testDivideZeroCandies() {
+        check(1, 0, true);
+    }
 //# END TODO
 
 }
