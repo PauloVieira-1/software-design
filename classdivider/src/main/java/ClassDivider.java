@@ -1,3 +1,9 @@
+import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Iterator;
+import java.util.HashSet;
+
 
 public class ClassDivider {
 
@@ -13,34 +19,21 @@ public class ClassDivider {
      */
     
     public boolean isDividable(Group<Student> klas, int groupSize, int deviation) { 
-
-        if (groupSize <= 0) {
-            return false;
-        }
-
-        if (deviation >= groupSize || deviation < 0) {
-            return false;
-        }
-
-        if (klas.size() % groupSize != 0) {
-            return false;
-        }
-
-        if (klas.size() < groupSize) {
-            return false;
-        }
-
-        if (klas.size() - groupSize > deviation) {
-            return false;
-        }
-
-        if (groupSize - deviation > klas.size()) {
-            return false;
-        }
-
-        return true;
-
+        
+    if (groupSize <= 0 || klas.size() <= 0) {
+        return false;
     }
+
+    int totalStudents = klas.size();
+    int minGroupSize = groupSize - deviation;
+    int maxGroupSize = groupSize + deviation;
+
+    if (totalStudents < minGroupSize || totalStudents > maxGroupSize) {
+        return false;
+    }
+
+    return true;
+}
 
 
     /**
@@ -53,26 +46,33 @@ public class ClassDivider {
      * @return a set of groups of students.
      */
 
-    public Set<Group<Student>> divide(Group<Student> klas, int groupSize, int deviation) { 
+    public Set<Group<Student>> divide(Group<Student> klas, int groupSize, int deviation) {
 
-        Iterator<Student> students = klas.iterator();
-        List<Group<Student>> groupSet = new ArrayList<>();
+        Set<Group<Student>> groupSet = new HashSet<>();
 
         if (!isDividable(klas, groupSize, deviation)) {
             return groupSet;
         }
 
+        Iterator<Student> students = klas.iterator();
+        int totalSize = klas.size();
+        int nrOfGroups = totalSize / groupSize;
+        int remainingStudents = totalSize % groupSize;
+
         for (int g = 0; g < nrOfGroups; g++) {
+            int currentGroupSize = groupSize + (remainingStudents-- > 0 ? 1 : 0);
             Group<Student> group = new Group<>();
 
-            for (int size = 0; size < groupSize; size++) {
-                group.add(students.next());
+            for (int size = 0; size < currentGroupSize; size++) {
+                if (students.hasNext()) {
+                    group.add(students.next());
+                }
             }
-
             groupSet.add(group);
         }
-        
+
         return groupSet;
     }
+
 
 }
