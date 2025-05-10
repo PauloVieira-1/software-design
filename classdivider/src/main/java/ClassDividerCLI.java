@@ -178,7 +178,8 @@ public class ClassDividerCLI implements Callable<Integer> {
                 overflow--;
             }
         }
-    }
+    } 
+
 
     /**
      * Handle separate group when overflow students cannot be distributed evenly.
