@@ -9,12 +9,13 @@ import java.util.HashSet;
 public class ClassDivider {
 
     /**
-     * Is it possible to divide a group of students into groups of a given size
-     * with a given deviation?
+     * Checks if it is possible to divide a group of students into groups of a given size
+     * with a given deviation.
      *
      * @param klas      the group of students to divide
      * @param groupSize target group size
-     * @param deviation permitted difference of number of students in a group and the target group size
+     * @param deviation permitted difference of number of students in a group and 
+     * the target group size
      * @pre {@code 0 < groupSize && 0 <= deviation && 0 < klas.size()}
      * @return {@code true} if the division is possible, {@code false} otherwise.
      */
@@ -48,11 +49,12 @@ public class ClassDivider {
     }
 
     /**
-     * Divide a group of students into groups of a given size with a given deviation.
+     * Divides a group of students into groups of a given size with a given deviation.
      *
      * @param klas      the group of students to divide
      * @param groupSize target group size
-     * @param deviation permitted difference of number of students in a group and the target group size
+     * @param deviation permitted difference of number of students in a group 
+     * and the target group size
      * @pre {@code 0 < groupSize && 0 <= deviation && 0 < klas.size()}
      * @return a set of groups of students.
      */
@@ -69,9 +71,12 @@ public class ClassDivider {
         int remainingStudents = totalSize % groupSize;
 
         for (int g = 0; g < nrOfGroups; g++) {
-            int currentGroupSize = groupSize + (remainingStudents-- > 0 ? 1 : 0);
-            Group<Student> group = new Group<>();
+            int currentGroupSize = groupSize;
+            if (remainingStudents-- > 0) {
+                currentGroupSize += 1;
+            }
 
+            Group<Student> group = new Group<>();
             for (int size = 0; size < currentGroupSize; size++) {
                 group.add(students.next());
             }
@@ -82,6 +87,11 @@ public class ClassDivider {
         return groupSet;
     }
 
+    /**
+     * Creates an empty set of student groups.
+     *
+     * @return an empty set of groups.
+     */
     private Set<Group<Student>> createEmptyGroup() {
         return new HashSet<>();
     }
