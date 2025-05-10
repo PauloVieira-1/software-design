@@ -163,8 +163,8 @@ public class ClassDividerCLI implements Callable<Integer> {
             }
             groupSet.add(group);
         }
-    }
-
+    } 
+    
     /**
      * Distribute overflow students to existing groups.
      */
