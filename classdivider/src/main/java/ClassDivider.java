@@ -94,5 +94,6 @@ public class ClassDivider {
      */
     private Set<Group<Student>> createEmptyGroup() {
         return new HashSet<>();
+
     }
 }

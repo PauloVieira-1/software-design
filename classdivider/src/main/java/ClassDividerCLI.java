@@ -185,11 +185,11 @@ public class ClassDividerCLI implements Callable<Integer> {
      */
     private void handleSeparateGroup(Iterator<Student> students, 
                                      List<Group<Student>> groupSet, 
-                                     int overflow) {
+                                     int overflow) { 
         Group<Student> separateGroup = new Group<>();
         for (int i = 0; i < overflow; i++) {
             separateGroup.add(students.next());
-        }
+        }  
 
         redistributeStudentsToSeparateGroup(groupSet, separateGroup);
 
