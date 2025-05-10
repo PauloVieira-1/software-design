@@ -180,7 +180,6 @@ public class ClassDividerCLI implements Callable<Integer> {
         }
     } 
 
-
     /**
      * Handle separate group when overflow students cannot be distributed evenly.
      */
@@ -196,7 +195,6 @@ public class ClassDividerCLI implements Callable<Integer> {
 
         groupSet.add(separateGroup);
     }
-    
 
     /**
      * Redistribute students to the separate group if necessary.
