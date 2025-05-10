@@ -196,6 +196,7 @@ public class ClassDividerCLI implements Callable<Integer> {
 
         groupSet.add(separateGroup);
     }
+    
 
     /**
      * Redistribute students to the separate group if necessary.
