@@ -1,54 +1,63 @@
 import java.util.Set;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Iterator;
 import java.util.HashSet;
 
-
+/**
+ * Provides functionality to divide a group of students into smaller groups
+ * with specified size and allowed deviation.
+ */
 public class ClassDivider {
 
     /**
      * Is it possible to divide a group of students into groups of a given size
      * with a given deviation?
      *
-     * @param klas the group of students to divide
+     * @param klas      the group of students to divide
      * @param groupSize target group size
-     * @param deviation permitted difference of number of students in a group
-     *   and the target group size.
+     * @param deviation permitted difference of number of students in a group and the target group size
+     * @pre {@code 0 < groupSize && 0 <= deviation && 0 < klas.size()}
      * @return {@code true} if the division is possible, {@code false} otherwise.
      */
-    
-    public boolean isDividable(Group<Student> klas, int groupSize, int deviation) { 
-        
-    if (groupSize <= 0 || klas.size() <= 0) {
+    public boolean isDividable(Group<Student> klas, int groupSize, int deviation) {
+        if (groupSize <= 0 || klas.size() <= 0) {
+            return false;
+        }
+
+        int totalStudents = klas.size();
+        int minSize = groupSize - deviation;
+        int maxSize = groupSize + deviation;
+
+        for (int groupCount = 1; groupCount <= totalStudents; groupCount++) {
+            int minTotal = getMinTotal(groupCount, minSize);
+            int maxTotal = getMaxTotal(groupCount, maxSize);
+
+            if (totalStudents >= minTotal && totalStudents <= maxTotal) {
+                return true;
+            }
+        }
+
         return false;
     }
 
-    int totalStudents = klas.size();
-    int minGroupSize = groupSize - deviation;
-    int maxGroupSize = groupSize + deviation;
-
-    if (totalStudents < minGroupSize || totalStudents > maxGroupSize) {
-        return false;
+    private int getMinTotal(int groupCount, int minSize) {
+        return groupCount * minSize;
     }
 
-    return true;
-}
-
+    private int getMaxTotal(int groupCount, int maxSize) {
+        return groupCount * maxSize;
+    }
 
     /**
      * Divide a group of students into groups of a given size with a given deviation.
      *
-     * @param klas the group of students to divide
+     * @param klas      the group of students to divide
      * @param groupSize target group size
-     * @param deviation permitted difference of number of students in a group
-     *   and the target group size.
+     * @param deviation permitted difference of number of students in a group and the target group size
+     * @pre {@code 0 < groupSize && 0 <= deviation && 0 < klas.size()}
      * @return a set of groups of students.
      */
-
     public Set<Group<Student>> divide(Group<Student> klas, int groupSize, int deviation) {
-
-        Set<Group<Student>> groupSet = new HashSet<>();
+        Set<Group<Student>> groupSet = createEmptyGroup();
 
         if (!isDividable(klas, groupSize, deviation)) {
             return groupSet;
@@ -64,15 +73,16 @@ public class ClassDivider {
             Group<Student> group = new Group<>();
 
             for (int size = 0; size < currentGroupSize; size++) {
-                if (students.hasNext()) {
-                    group.add(students.next());
-                }
+                group.add(students.next());
             }
+
             groupSet.add(group);
         }
 
         return groupSet;
     }
 
-
+    private Set<Group<Student>> createEmptyGroup() {
+        return new HashSet<>();
+    }
 }

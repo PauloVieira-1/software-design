@@ -1,7 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-import java.util.Iterator;
 
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -21,14 +20,13 @@ public class ClassDividerTest {
     }
 
     private Group<Student> createGroup(int count) {
-    Group<Student> group = new Group<>();
-    for (int i = 0; i < count; i++) {
-        String name = "Student" + i;
-        group.add(new Student(name, "Lastname" + i, "ID" + i));
+        Group<Student> group = new Group<>();
+        for (int i = 0; i < count; i++) {
+            String name = "Student" + i;
+            group.add(new Student(name, "Lastname" + i, "ID" + i));
+        }
+        return group;
     }
-    return group;
-}
-
 
     private List<String> extractGroupSizes(Set<Group<Student>> groups) {
         List<String> result = new ArrayList<>();
@@ -69,9 +67,9 @@ public class ClassDividerTest {
         List<String> actual = extractGroupSizes(actualGroups);
 
         List<String> expected = List.of(
-            "Group 1: 4 students",
+            "Group 1: 3 students",
             "Group 2: 3 students",
-            "Group 3: 3 students"
+            "Group 3: 4 students"
         );
         check(expected, actual);
     }
