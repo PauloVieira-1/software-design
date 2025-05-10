@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.Callable;
+import java.util.concurrent.Callable;  
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Model.CommandSpec;
@@ -13,8 +13,9 @@ import picocli.CommandLine.ParameterException;
 import picocli.CommandLine.Parameters;
 import picocli.CommandLine.Spec;
 
+
 /**
- * ClassDivider–Divide a class of students into groups.
+ * ClassDivider - Divide a class of students into groups.
  *
  * @version 0.6
  * @author Huub de Beer
@@ -23,7 +24,8 @@ import picocli.CommandLine.Spec;
         name = "classdivider",
         mixinStandardHelpOptions = true,
         version = "classdivider 0.6",
-        description = "Divide a class of students into groups.")
+        description = "Divide a class of students into groups."
+)
 public class ClassDividerCLI implements Callable<Integer> {
 
     /*
@@ -31,7 +33,7 @@ public class ClassDividerCLI implements Callable<Integer> {
      */
     @CommandLine.Option(
             names = {"-g", "--group-size"},
-            description = "target group size.",
+            description = "Target group size.",
             required = true
     )
     private int groupSize;
@@ -42,8 +44,8 @@ public class ClassDividerCLI implements Callable<Integer> {
      */
     @CommandLine.Option(
             names = {"-d", "--deviation"},
-            description = "permitted difference of number of students in a group "
-            + " and the target group size. Defaults to ${DEFAULT-VALUE}.")
+            description = "Permitted difference in number of students in a group "
+                    + "and the target group size. Defaults to ${DEFAULT-VALUE}.")
     private int deviation = 1;
 
     /*
@@ -51,7 +53,7 @@ public class ClassDividerCLI implements Callable<Integer> {
      */
     @Parameters(
             index = "0",
-            description = "path to file with students data in CSV format."
+            description = "Path to file with students data in CSV format."
     )
     private Path studentsFile;
 
@@ -94,20 +96,20 @@ public class ClassDividerCLI implements Callable<Integer> {
         if (groupSize <= 0) {
             throw new ParameterException(
                     commandSpec.commandLine(),
-                    "group size must be a positive integer number.");
+                    "Group size must be a positive integer.");
         }
 
         if (deviation >= groupSize || deviation < 0) {
             throw new ParameterException(
                     commandSpec.commandLine(),
-                    "deviation must be a positive number smaller than group size.");
+                    "Deviation must be a positive number smaller than group size.");
         }
 
         if (!isDividable(klas.size(), groupSize, deviation)) {
             throw new ParameterException(
                     commandSpec.commandLine(),
                     "Unable to divide a class of %d into groups of %d+/-%d students."
-                    .formatted(klas.size(), groupSize, deviation)
+                            .formatted(klas.size(), groupSize, deviation)
             );
         }
     }
@@ -152,7 +154,8 @@ public class ClassDividerCLI implements Callable<Integer> {
     /**
      * Fill the groups with the target group size.
      */
-    private void fillGroups(Iterator<Student> students, List<Group<Student>> groupSet, int nrOfGroups) {
+    private void fillGroups(Iterator<Student> students, 
+                            List<Group<Student>> groupSet, int nrOfGroups) {
         for (int g = 0; g < nrOfGroups; g++) {
             Group<Student> group = new Group<>();
             for (int size = 0; size < groupSize; size++) {
@@ -165,7 +168,10 @@ public class ClassDividerCLI implements Callable<Integer> {
     /**
      * Distribute overflow students to existing groups.
      */
-    private void distributeOverflow(Iterator<Student> students, List<Group<Student>> groupSet, int nrOfGroups, int overflow) {
+    private void distributeOverflow(Iterator<Student> students, 
+                                    List<Group<Student>> groupSet, 
+                                    int nrOfGroups, 
+                                    int overflow) {
         for (int d = 0; d < deviation && overflow > 0; d++) {
             for (int g = 0; g < nrOfGroups && overflow > 0; g++) {
                 groupSet.get(g).add(students.next());
@@ -177,7 +183,9 @@ public class ClassDividerCLI implements Callable<Integer> {
     /**
      * Handle separate group when overflow students cannot be distributed evenly.
      */
-    private void handleSeparateGroup(Iterator<Student> students, List<Group<Student>> groupSet, int overflow) {
+    private void handleSeparateGroup(Iterator<Student> students, 
+                                     List<Group<Student>> groupSet, 
+                                     int overflow) {
         Group<Student> separateGroup = new Group<>();
         for (int i = 0; i < overflow; i++) {
             separateGroup.add(students.next());
@@ -191,7 +199,8 @@ public class ClassDividerCLI implements Callable<Integer> {
     /**
      * Redistribute students to the separate group if necessary.
      */
-    private void redistributeStudentsToSeparateGroup(List<Group<Student>> groupSet, Group<Student> separateGroup) {
+    private void redistributeStudentsToSeparateGroup(List<Group<Student>> groupSet, 
+                                                     Group<Student> separateGroup) {
         for (int d = 0; d < deviation && separateGroup.size() < groupSize - deviation; d++) {
             int g = groupSet.size();
 
@@ -225,7 +234,8 @@ public class ClassDividerCLI implements Callable<Integer> {
     /**
      * Print the group set to standard output.
      */
-    private void printGroups(List<Group<Student>> groupSet, Map<String, Boolean> uniqueFirstName) {
+    private void printGroups(List<Group<Student>> groupSet, Map<String, 
+                                                              Boolean> uniqueFirstName) {
         int groupNr = 0;
 
         for (Group<Student> group : groupSet) {
